@@ -114,7 +114,13 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             circleUIConfig: circleUIConfig,
-            keyboardUIConfig: keyboardUIConfig,
+            keyboardUIConfig: KeyboardUIConfig(
+                digitTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500),
+                digitFillColor: Colors.white,
+                primaryColor: Colors.black38),
             passwordEnteredCallback: _onPasscodeEntered,
             cancelButton: cancelButton,
             deleteButton: Text(
@@ -127,7 +133,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
             cancelCallback: _onPasscodeCancelled,
             digits: digits,
             passwordDigits: 6,
-            bottomWidget: _buildPasscodeRestoreButton(),
+            //bottomWidget: _buildPasscodeRestoreButton(),
           ),
         ));
   }

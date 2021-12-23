@@ -124,12 +124,12 @@ class _PasscodeScreenState extends State<PasscodeScreen>
               ),
             ),
           ),
-          Positioned(
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: _buildDeleteButton(),
-            ),
-          ),
+          // Positioned(
+          //   child: Align(
+          //     alignment: Alignment.bottomRight,
+          //     child: _buildDeleteButton(),
+          //   ),
+          // ),
         ],
       );
 
@@ -179,12 +179,12 @@ class _PasscodeScreenState extends State<PasscodeScreen>
               ),
             ),
           ),
-          Positioned(
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: _buildDeleteButton(),
-            ),
-          )
+          // Positioned(
+          //   child: Align(
+          //     alignment: Alignment.bottomRight,
+          //     child: _buildDeleteButton(),
+          //   ),
+          // )
         ],
       );
 
@@ -193,6 +193,19 @@ class _PasscodeScreenState extends State<PasscodeScreen>
           onKeyboardTap: _onKeyboardButtonPressed,
           keyboardUIConfig: widget.keyboardUIConfig,
           digits: widget.digits,
+          onBackspace: () {
+            if (enteredPasscode.length > 0) {
+              setState(() {
+                enteredPasscode =
+                    enteredPasscode.substring(0, enteredPasscode.length - 1);
+              });
+            }
+          },
+          onCancel: () {
+            if (widget.cancelCallback != null) {
+              widget.cancelCallback!();
+            }
+          }
         ),
       );
 

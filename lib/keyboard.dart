@@ -36,13 +36,17 @@ class Keyboard extends StatelessWidget {
 
   //should have a proper order [1...9, 0]
   final List<String>? digits;
+  final VoidCallback? onCancel;
+  final VoidCallback? onBackspace;
 
-  Keyboard({
-    Key? key,
-    required this.keyboardUIConfig,
-    required this.onKeyboardTap,
-    this.digits,
-  }) : super(key: key);
+  Keyboard(
+      {Key? key,
+      required this.keyboardUIConfig,
+      required this.onKeyboardTap,
+      this.digits,
+      this.onBackspace,
+      this.onCancel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => _buildKeyboard(context);
@@ -50,15 +54,34 @@ class Keyboard extends StatelessWidget {
   Widget _buildKeyboard(BuildContext context) {
     List<String> keyboardItems = List.filled(10, '0');
     if (digits == null || digits!.isEmpty) {
-      keyboardItems = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+      keyboardItems = [
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'cancel',
+        '0',
+        'backspace'
+      ];
+      // create widget class with icon and callback. for backspace and cancel
     } else {
       keyboardItems = digits!;
     }
     final screenSize = MediaQuery.of(context).size;
-    final keyboardHeight = screenSize.height > screenSize.width
-        ? screenSize.height / 2
-        : screenSize.height - 80;
-    final keyboardWidth = keyboardHeight * 3 / 4;
+    double keyboardHeight, keyboardWidth;
+    if (screenSize.height > screenSize.width) {
+      keyboardHeight = screenSize.height / 2;
+      keyboardWidth = keyboardHeight * 3 / 4;
+    } else {
+      keyboardWidth = screenSize.width / 4;
+      keyboardHeight = keyboardWidth * 4 / 3;
+    }
+
     final keyboardSize = this.keyboardUIConfig.keyboardSize != null
         ? this.keyboardUIConfig.keyboardSize!
         : Size(keyboardWidth, keyboardHeight);
@@ -68,8 +91,14 @@ class Keyboard extends StatelessWidget {
       margin: EdgeInsets.only(top: 16),
       child: AlignedGrid(
         keyboardSize: keyboardSize,
-        children: List.generate(10, (index) {
-          return _buildKeyboardDigit(keyboardItems[index]);
+        children: List.generate(keyboardItems.length, (index) {
+          if (keyboardItems[index] == "backspace") {
+            return _buildKeyboardAction(this.onBackspace, icon:Icons.backspace);
+          } else if (keyboardItems[index] == "cancel") {
+            return _buildKeyboardAction(this.onCancel, text: "cancel");
+          } else {
+            return _buildKeyboardDigit(keyboardItems[index]);
+          } //return _buildKeyboardDigit(keyboardItems[index]);
         }),
       ),
     );
@@ -77,7 +106,7 @@ class Keyboard extends StatelessWidget {
 
   Widget _buildKeyboardDigit(String text) {
     return Container(
-      margin: EdgeInsets.all(4),
+      margin: EdgeInsets.all(6),
       child: ClipOval(
         child: Material(
           color: Colors.transparent,
@@ -104,6 +133,68 @@ class Keyboard extends StatelessWidget {
                     text,
                     style: keyboardUIConfig.digitTextStyle,
                     semanticsLabel: text,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKeyboardAction(VoidCallback? onActionTap,
+      {String? text, IconData? icon}) {
+    return Container(
+      margin: EdgeInsets.all(6),
+      child: ClipOval(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: keyboardUIConfig.primaryColor.withOpacity(0.4),
+            onTap: onActionTap,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+                border: Border.all(
+                    color: keyboardUIConfig.primaryColor,
+                    width: keyboardUIConfig.digitBorderWidth),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  //color: keyboardUIConfig.digitFillColor,
+                  color: Colors.grey,
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      (() {
+                        if (icon != null) {
+                          return Icon(
+                            icon,
+                            color: Colors.black54,
+                            size: 30,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }()),
+                      (() {
+                        if (text != null) {
+                          return Text(
+                            text,
+                            style:
+                                TextStyle(fontSize: 18, color: Colors.black54),
+                            semanticsLabel: text,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }()),
+                    ],
                   ),
                 ),
               ),
