@@ -63,11 +63,11 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
           _showLockScreen(
             context,
             opaque: false,
-            cancelButton: Text(
-              'Cancel',
-              style: const TextStyle(fontSize: 16, color: Colors.white),
-              semanticsLabel: 'Cancel',
-            ),
+            // cancelButton: Text(
+            //   'Cancel',
+            //   style: const TextStyle(fontSize: 16, color: Colors.white),
+            //   semanticsLabel: 'Cancel',
+            // ),
           );
         },
       );
@@ -85,10 +85,10 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 circleSize: 30),
             keyboardUIConfig: KeyboardUIConfig(
                 digitBorderWidth: 2, primaryColor: Colors.blue),
-            cancelButton: Icon(
-              Icons.arrow_back,
-              color: Colors.blue,
-            ),
+            // cancelButton: Icon(
+            //   Icons.arrow_back,
+            //   color: Colors.blue,
+            // ),
             digits: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '零']);
       },
     );
@@ -99,7 +99,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     required bool opaque,
     CircleUIConfig? circleUIConfig,
     KeyboardUIConfig? keyboardUIConfig,
-    required Widget cancelButton,
+    //required Widget cancelButton,
     List<String>? digits,
   }) {
     Navigator.push(
@@ -122,12 +122,12 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                 digitFillColor: Colors.white,
                 primaryColor: Colors.black38),
             passwordEnteredCallback: _onPasscodeEntered,
-            cancelButton: cancelButton,
-            deleteButton: Text(
-              'Delete',
-              style: const TextStyle(fontSize: 16, color: Colors.white),
-              semanticsLabel: 'Delete',
-            ),
+            //cancelButton: cancelButton,
+            // deleteButton: Text(
+            //   'Delete',
+            //   style: const TextStyle(fontSize: 16, color: Colors.white),
+            //   semanticsLabel: 'Delete',
+            // ),
             shouldTriggerVerification: _verificationNotifier.stream,
             backgroundColor: Colors.black.withOpacity(0.8),
             cancelCallback: _onPasscodeCancelled,

@@ -17,8 +17,8 @@ class PasscodeScreen extends StatefulWidget {
   final int passwordDigits;
   final PasswordEnteredCallback passwordEnteredCallback;
   // Cancel button and delete button will be switched based on the screen state
-  final Widget cancelButton;
-  final Widget deleteButton;
+  //final Widget cancelButton;
+  //final Widget deleteButton;
   final Stream<bool> shouldTriggerVerification;
   final CircleUIConfig circleUIConfig;
   final KeyboardUIConfig keyboardUIConfig;
@@ -36,8 +36,8 @@ class PasscodeScreen extends StatefulWidget {
     required this.title,
     this.passwordDigits = 6,
     required this.passwordEnteredCallback,
-    required this.cancelButton,
-    required this.deleteButton,
+    //required this.cancelButton,
+    //required this.deleteButton,
     required this.shouldTriggerVerification,
     this.isValidCallback,
     CircleUIConfig? circleUIConfig,
@@ -287,17 +287,17 @@ class _PasscodeScreenState extends State<PasscodeScreen>
     }
   }
 
-  Widget _buildDeleteButton() {
-    return Container(
-      child: CupertinoButton(
-        onPressed: _onDeleteCancelButtonPressed,
-        child: Container(
-          margin: widget.keyboardUIConfig.digitInnerMargin,
-          child: enteredPasscode.length == 0
-              ? widget.cancelButton
-              : widget.deleteButton,
-        ),
-      ),
-    );
-  }
+  // Widget _buildDeleteButton() {
+  //   return Container(
+  //     child: CupertinoButton(
+  //       onPressed: _onDeleteCancelButtonPressed,
+  //       child: Container(
+  //         margin: widget.keyboardUIConfig.digitInnerMargin,
+  //         child: enteredPasscode.length == 0
+  //             ? widget.cancelButton
+  //             : widget.deleteButton,
+  //       ),
+  //     ),
+  //   );
+  // }
 }
